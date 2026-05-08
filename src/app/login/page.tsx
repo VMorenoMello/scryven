@@ -29,10 +29,14 @@ export default function LoginPage() {
         window.location.href = '/app/matrix'
       }
     } else {
-      const { error } = await supabase.auth.signUp({ email, password })
+      const { data, error } = await supabase.auth.signUp({ email, password })
       if (error) {
         setError(error.message)
+      } else if (data.session) {
+        // Email confirmation desativada — sessão criada imediatamente
+        window.location.href = '/app/matrix'
       } else {
+        // Email confirmation ativada — aguarda confirmação
         setSuccess('Conta criada! Verifique seu email para confirmar.')
       }
     }
