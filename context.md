@@ -105,19 +105,19 @@ export const QUADRANTS = {
 ```
 ---
 ## Funcionalidades do MVP (v1)
-### Sprint 1 — Setup + auth
-- [ ] Repositório GitHub + Vercel + Supabase conectados
-- [ ] Auth: Google OAuth + email/senha via `@supabase/ssr`
-- [ ] Tabelas `tasks` e `weekly_reviews` com RLS
-- [ ] Layout base: sidebar, header, área de conteúdo
-- [ ] Dark mode com `next-themes`
-- [ ] Design system importado de `components/ui/` (gerado pelo Claude)
-### Sprint 2 — Backlog + matriz
-- [ ] Captura rápida de tarefa (Enter para salvar)
-- [ ] View de matriz 2×2 com os 4 quadrantes
-- [ ] Drag and drop entre quadrantes (dnd-kit → atualiza Supabase)
-- [ ] View de backlog (tarefas sem quadrante)
-- [ ] Marcar tarefa como concluída
+### Sprint 1 — Setup + auth ✅
+- [x] Repositório GitHub + Vercel + Supabase conectados
+- [x] Auth: email/senha via `@supabase/ssr`
+- [x] Tabelas `tasks` e `weekly_reviews` com RLS
+- [x] Layout base: sidebar, header, área de conteúdo
+- [x] Dark mode com `next-themes`
+- [x] Design system importado de `components/ui/`
+### Sprint 2 — Backlog + matriz ✅
+- [x] Captura rápida de tarefa (Enter para salvar)
+- [x] View de matriz 2×2 com os 4 quadrantes
+- [x] Drag and drop entre quadrantes (dnd-kit → atualiza Supabase)
+- [x] View de backlog (tarefas sem quadrante)
+- [x] Marcar tarefa como concluída
 ### Sprint 3 — Ritual diário
 - [ ] Tela de planejamento diário (abre no login se ainda não planejou)
 - [ ] Seleção de 3 tarefas do dia — sugestão: 1 Q1, 1 Q2, 1 Q3
