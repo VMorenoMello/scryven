@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="p-w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0D78F"></stop><stop offset="1" stop-color="#C9A340"></stop></linearGradient>
+    <linearGradient id="p-u" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6FACE6"></stop><stop offset="1" stop-color="#326DA8"></stop></linearGradient>
+    <linearGradient id="p-r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E27460"></stop><stop offset="1" stop-color="#9C2E1B"></stop></linearGradient>
+    <linearGradient id="p-b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7A6F5E"></stop><stop offset="1" stop-color="#3B342A"></stop></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#FAF9F7"></rect>
+  <g transform="translate(256 196)">
+    <path d="M0 60 L140 130 L140 270 L0 200 Z" fill="#C9BFA8"></path>
+    <path d="M0 60 L-140 130 L-140 270 L0 200 Z" fill="#DED4BB"></path>
+    <path d="M0 -80 L70 -40 L0 0 L-70 -40 Z" fill="url(#p-w)"></path>
+    <path d="M70 -40 L140 0 L70 40 L0 0 Z" fill="url(#p-u)"></path>
+    <path d="M0 0 L70 40 L0 80 L-70 40 Z" fill="url(#p-r)"></path>
+    <path d="M-70 -40 L0 0 L-70 40 L-140 0 Z" fill="url(#p-b)"></path>
+    <path d="M-140 0 L140 0 M0 -80 L0 80" stroke="#1F1D1A" stroke-width="4" stroke-opacity="0.5"></path>
+    <path d="M0 -80 L140 0 L0 80 L-140 0 Z" stroke="#1F1D1A" stroke-width="6" stroke-opacity="0.85" fill="none"></path>
+    <path d="M0 60 L0 200 M-140 130 L-140 270 M140 130 L140 270 M-140 270 L0 200 L140 270" stroke="#1F1D1A" stroke-width="4" stroke-opacity="0.4" fill="none"></path>
+    <circle cx="0" cy="0" r="18" fill="#4A8A4A" stroke="#2E5A2E" stroke-width="3"></circle>
+  </g>
+</svg>

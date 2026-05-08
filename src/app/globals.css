@@ -1,26 +1,173 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap');
 
+/* ============================================================
+   Scryven — Design Tokens (light mode)
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --bg:            #FAF9F7;
+  --surface:       #FFFFFF;
+  --surface-2:     #F2F0EC;
+  --surface-3:     #E8E5DF;
+
+  --fg:            #1F1D1A;
+  --fg-2:          #4A463F;
+  --fg-muted:      #8A8478;
+  --fg-disabled:   #BDB8AC;
+
+  --border-subtle: #E8E5DF;
+  --border-strong: #B8A882;
+
+  --green:         #4A8A4A;
+  --green-fill:    #E8F2E8;
+  --green-border:  #4A8A4A;
+  --green-text:    #1F4A1F;
+  --green-700:     #3A6E3A;
+  --green-800:     #2E5A2E;
+
+  --q1-fill:       #F5F0E8;
+  --q1-border:     #B8A882;
+  --q1-text:       #4A3F28;
+
+  --q2-fill:       #E8F2FB;
+  --q2-border:     #4A7FB5;
+  --q2-text:       #1A3D5C;
+
+  --q3-fill:       #FBE8E4;
+  --q3-border:     #C4503A;
+  --q3-text:       #6B1F10;
+
+  --q4-fill:       #2A2825;
+  --q4-border:     #6B5E4A;
+  --q4-text:       #C8B896;
+
+  --scrim:         rgba(40, 38, 35, 0.40);
+
+  --font-display:  'Instrument Serif', Georgia, serif;
+  --font-body:     'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-quiet:    cubic-bezier(0.2, 0, 0.2, 1);
+  --dur-fast:      120ms;
+  --dur-base:      150ms;
+  --dur-slow:      220ms;
 }
 
+/* ============================================================
+   Dark mode — toggled via .dark (next-themes)
+   ============================================================ */
+.dark {
+  color-scheme: dark;
+
+  --bg:            #16140F;
+  --surface:       #1F1D17;
+  --surface-2:     #2A2721;
+  --surface-3:     #36322B;
+
+  --fg:            #F2EFE8;
+  --fg-2:          #C8C3B5;
+  --fg-muted:      #8A8478;
+  --fg-disabled:   #5A5648;
+
+  --border-subtle: #36322B;
+  --border-strong: #6B5E4A;
+
+  --green:         #6FB36F;
+  --green-fill:    #1E2C1E;
+  --green-border:  #6FB36F;
+  --green-text:    #C2E4C2;
+  --green-700:     #5A9A5A;
+  --green-800:     #4A8A4A;
+
+  --q1-fill:       #2C2620;
+  --q1-border:     #B8A882;
+  --q1-text:       #E8DFC8;
+
+  --q2-fill:       #1B2735;
+  --q2-border:     #6B9FD0;
+  --q2-text:       #C8DFF5;
+
+  --q3-fill:       #321E1A;
+  --q3-border:     #D06A52;
+  --q3-text:       #F5C8BC;
+
+  --q4-fill:       #0E0D0B;
+  --q4-border:     #4A4238;
+  --q4-text:       #8A7F68;
+
+  --scrim:         rgba(0, 0, 0, 0.60);
+}
+
+/* ============================================================
+   Tailwind v4 — expor tokens como utilitários
+   ============================================================ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg:           var(--bg);
+  --color-surface:      var(--surface);
+  --color-surface-2:    var(--surface-2);
+  --color-surface-3:    var(--surface-3);
+  --color-fg:           var(--fg);
+  --color-fg-2:         var(--fg-2);
+  --color-fg-muted:     var(--fg-muted);
+  --color-fg-disabled:  var(--fg-disabled);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-green:        var(--green);
+  --color-green-fill:   var(--green-fill);
+  --color-green-text:   var(--green-text);
+  --color-q1-fill:      var(--q1-fill);
+  --color-q1-border:    var(--q1-border);
+  --color-q1-text:      var(--q1-text);
+  --color-q2-fill:      var(--q2-fill);
+  --color-q2-border:    var(--q2-border);
+  --color-q2-text:      var(--q2-text);
+  --color-q3-fill:      var(--q3-fill);
+  --color-q3-border:    var(--q3-border);
+  --color-q3-text:      var(--q3-text);
+  --color-q4-fill:      var(--q4-fill);
+  --color-q4-border:    var(--q4-border);
+  --color-q4-text:      var(--q4-text);
+
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================================
+   Base styles
+   ============================================================ */
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+h1, .text-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+}
+
+h2, .text-heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.text-label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.text-caption {
+  font-size: 11px;
+  color: var(--fg-muted);
 }
