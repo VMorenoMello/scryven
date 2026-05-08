@@ -5,6 +5,15 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'Scryven — Planejar menos. Executar mais.',
   description: 'Ritual diário guiado para sair do ciclo de replanejamento e executar o que realmente importa.',
+  manifest: '/manifest.webmanifest',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Scryven',
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
 }
 
 export default function RootLayout({

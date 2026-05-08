@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
+import { triggerWelcomeEmail } from '@/app/actions/email'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 
@@ -26,7 +27,7 @@ export default function LoginPage() {
       if (error) {
         setError('Email ou senha incorretos.')
       } else {
-        window.location.href = '/app/matrix'
+        window.location.href = '/app/today'
       }
     } else {
       const { data, error } = await supabase.auth.signUp({ email, password })
@@ -34,7 +35,8 @@ export default function LoginPage() {
         setError(error.message)
       } else if (data.session) {
         // Email confirmation desativada — sessão criada imediatamente
-        window.location.href = '/app/matrix'
+        await triggerWelcomeEmail(email).catch(() => {}) // não bloqueia o fluxo
+        window.location.href = '/app/today'
       } else {
         // Email confirmation ativada — aguarda confirmação
         setSuccess('Conta criada! Verifique seu email para confirmar.')
