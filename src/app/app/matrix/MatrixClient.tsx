@@ -1,6 +1,6 @@
 'use client'
 
-import { useOptimistic, useTransition } from 'react'
+import { useOptimistic, useTransition, useState } from 'react'
 import {
   DndContext,
   DragOverlay,
@@ -11,17 +11,14 @@ import {
   useDraggable,
   type DragEndEvent,
 } from '@dnd-kit/core'
-import { useState } from 'react'
 import { QUAD_META } from '@/components/ui/QuadrantChip'
-import { moveTask, toggleTask } from '@/app/actions/tasks'
+import { moveTask, toggleTask, createTask } from '@/app/actions/tasks'
 import { CaptureBar } from '@/components/ui/CaptureBar'
-import { createTask } from '@/app/actions/tasks'
 import type { QuadrantKey } from '@/components/ui/QuadrantChip'
 
 interface DBTask { id: string; title: string; quadrant: number | null; status: string }
 
 const Q_NUM: Record<QuadrantKey, number> = { q1: 1, q2: 2, q3: 3, q4: 4, g: 1 }
-const NUM_Q: Record<number, QuadrantKey> = { 1: 'q1', 2: 'q2', 3: 'q3', 4: 'q4' }
 
 const CELLS: { q: QuadrantKey; title: string; subtitle: string }[] = [
   { q: 'q1', title: 'Q1 · Fazer agora',  subtitle: 'Urgente e importante' },
@@ -30,7 +27,12 @@ const CELLS: { q: QuadrantKey; title: string; subtitle: string }[] = [
   { q: 'q4', title: 'Q4 · Eliminar',     subtitle: 'Nenhum dos dois' },
 ]
 
-function DraggableTask({ task, onToggle }: { task: DBTask; onToggle: (id: string) => void }) {
+// ── Tarefa arrastável genérica ─────────────────────────────
+function DraggableTask({ task, light = false, onToggle }: {
+  task: DBTask
+  light?: boolean
+  onToggle?: (id: string) => void
+}) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: task.id })
   return (
     <div
@@ -39,30 +41,42 @@ function DraggableTask({ task, onToggle }: { task: DBTask; onToggle: (id: string
       {...attributes}
       style={{
         display: 'flex', alignItems: 'center', gap: 8,
-        padding: '6px 8px', borderRadius: 6,
-        background: isDragging ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.4)',
-        fontSize: 13, cursor: 'grab',
+        padding: light ? '5px 10px' : '6px 8px',
+        borderRadius: light ? 6 : 6,
+        background: light
+          ? isDragging ? 'var(--surface-3)' : 'var(--surface-2)'
+          : isDragging ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.4)',
+        border: light ? '1px solid var(--border-subtle)' : 'none',
+        fontSize: 13,
+        color: light ? 'var(--fg)' : 'currentColor',
+        cursor: 'grab',
         opacity: isDragging ? 0.4 : 1,
         transition: 'opacity 120ms',
+        whiteSpace: 'nowrap',
+        userSelect: 'none',
       }}
     >
-      <button
-        onClick={(e) => { e.stopPropagation(); onToggle(task.id) }}
-        style={{
-          width: 13, height: 13, borderRadius: 3,
-          border: '1.5px solid currentColor',
-          background: 'transparent',
-          padding: 0, cursor: 'pointer', flexShrink: 0,
-        }}
-      />
+      {onToggle && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onToggle(task.id) }}
+          style={{
+            width: 13, height: 13, borderRadius: 3,
+            border: '1.5px solid currentColor',
+            background: 'transparent',
+            padding: 0, cursor: 'pointer', flexShrink: 0,
+          }}
+        />
+      )}
       <span style={{ flex: 1 }}>{task.title}</span>
     </div>
   )
 }
 
-function DroppableQuadrant({
-  q, title, subtitle, tasks, onToggle,
-}: { q: QuadrantKey; title: string; subtitle: string; tasks: DBTask[]; onToggle: (id: string) => void }) {
+// ── Quadrante droppable ────────────────────────────────────
+function DroppableQuadrant({ q, title, subtitle, tasks, onToggle }: {
+  q: QuadrantKey; title: string; subtitle: string
+  tasks: DBTask[]; onToggle: (id: string) => void
+}) {
   const meta = QUAD_META[q]
   const { setNodeRef, isOver } = useDroppable({ id: q })
 
@@ -70,12 +84,9 @@ function DroppableQuadrant({
     <div
       ref={setNodeRef}
       style={{
-        background: meta.fill,
-        color: meta.text,
+        background: meta.fill, color: meta.text,
         border: `1px solid ${isOver ? meta.border : meta.border + '88'}`,
-        borderRadius: 12,
-        padding: 14,
-        minHeight: 220,
+        borderRadius: 12, padding: 14, minHeight: 200,
         display: 'flex', flexDirection: 'column', gap: 10,
         outline: isOver ? `2px solid ${meta.border}` : 'none',
         outlineOffset: -2,
@@ -99,7 +110,7 @@ function DroppableQuadrant({
             flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 12, opacity: 0.45,
             border: `1px dashed ${meta.border}66`, borderRadius: 8,
-            padding: 16, minHeight: 120, textAlign: 'center',
+            padding: 16, minHeight: 100, textAlign: 'center',
           }}>
             {isOver ? 'Solte aqui' : 'Arraste uma tarefa aqui'}
           </div>
@@ -111,6 +122,41 @@ function DroppableQuadrant({
   )
 }
 
+// ── Painel de inbox (pool arrastável) ─────────────────────
+function InboxPool({ tasks }: { tasks: DBTask[] }) {
+  const { setNodeRef, isOver } = useDroppable({ id: 'inbox-pool' })
+
+  if (tasks.length === 0) return null
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        marginBottom: 20,
+        padding: '12px 16px',
+        background: isOver ? 'var(--surface-2)' : 'var(--surface)',
+        border: `1px solid ${isOver ? 'var(--border-strong)' : 'var(--border-subtle)'}`,
+        borderRadius: 10,
+        transition: 'border-color 120ms, background 120ms',
+      }}
+    >
+      <div style={{
+        fontSize: 11, fontWeight: 500, color: 'var(--fg-muted)',
+        textTransform: 'uppercase', letterSpacing: '0.08em',
+        marginBottom: 10,
+      }}>
+        Inbox — {tasks.length} sem quadrante · Arraste para classificar
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        {tasks.map(t => (
+          <DraggableTask key={t.id} task={t} light />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ── Componente principal ───────────────────────────────────
 export function MatrixClient({ tasks: initial }: { tasks: DBTask[] }) {
   const [, startTransition] = useTransition()
   const [tasks, setTasks] = useOptimistic(initial)
@@ -121,11 +167,12 @@ export function MatrixClient({ tasks: initial }: { tasks: DBTask[] }) {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
     setActiveId(null)
-    if (!over) return
+    if (!over || over.id === 'inbox-pool') return
 
     const taskId = active.id as string
     const targetQ = over.id as QuadrantKey
     const newQuadrant = Q_NUM[targetQ]
+    if (!newQuadrant) return
 
     startTransition(async () => {
       setTasks(prev => prev.map(t => t.id === taskId ? { ...t, quadrant: newQuadrant } : t))
@@ -141,11 +188,19 @@ export function MatrixClient({ tasks: initial }: { tasks: DBTask[] }) {
   }
 
   function handleAdd(title: string) {
+    const temp: DBTask = {
+      id: crypto.randomUUID(),
+      title,
+      quadrant: null,
+      status: 'backlog',
+    }
     startTransition(async () => {
+      setTasks(prev => [temp, ...prev])
       await createTask(title)
     })
   }
 
+  const inboxTasks = tasks.filter(t => t.quadrant === null)
   const activeTask = tasks.find(t => t.id === activeId)
 
   return (
@@ -157,6 +212,8 @@ export function MatrixClient({ tasks: initial }: { tasks: DBTask[] }) {
           onDragEnd={handleDragEnd}
           onDragCancel={() => setActiveId(null)}
         >
+          <InboxPool tasks={inboxTasks} />
+
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             {CELLS.map(c => (
               <DroppableQuadrant

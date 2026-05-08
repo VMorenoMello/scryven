@@ -7,7 +7,6 @@ export default async function MatrixPage() {
   const { data: tasks } = await supabase
     .from('tasks')
     .select('*')
-    .not('quadrant', 'is', null)
     .neq('status', 'done')
     .order('created_at', { ascending: true })
 
