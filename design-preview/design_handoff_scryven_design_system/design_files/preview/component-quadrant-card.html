@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  .qcard {
+    border: 1px solid;
+    border-radius: 12px;
+    padding: 12px 14px;
+    width: 280px;
+    font-family: Inter, sans-serif;
+  }
+  .qhead {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .qtitle {
+    font-family: Inter, sans-serif; font-weight: 500; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .qsub { font-size: 11px; opacity: 0.7; }
+  .qtask {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 0;
+    font-size: 12px;
+  }
+  .qcheck { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid currentColor; opacity: 0.6; flex-shrink: 0; }
+</style>
+</head>
+<body>
+  <div class="row" style="gap: 16px; align-items: flex-start;">
+    <div class="qcard" style="background:#F5F0E8; color:#4A3F28; border-color:#B8A882;">
+      <div class="qhead">
+        <span class="qtitle">Q1 · Do now</span>
+        <span class="qsub">3</span>
+      </div>
+      <div class="qtask"><span class="qcheck"></span>Sign Q3 invoice</div>
+      <div class="qtask"><span class="qcheck"></span>Reply to procurement</div>
+      <div class="qtask"><span class="qcheck"></span>Push hotfix to staging</div>
+    </div>
+    <div class="qcard" style="background:#E8F2FB; color:#1A3D5C; border-color:#4A7FB5;">
+      <div class="qhead">
+        <span class="qtitle">Q2 · Plan</span>
+        <span class="qsub">5</span>
+      </div>
+      <div class="qtask"><span class="qcheck"></span>Outline FrontEnd BR talk</div>
+      <div class="qtask"><span class="qcheck"></span>Draft team OKRs</div>
+      <div class="qtask" style="opacity: 0.6;"><span class="qcheck"></span>+3 more</div>
+    </div>
+  </div>
+</body></html>

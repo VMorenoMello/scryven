@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(gh auth status)"
+      "PowerShell(gh auth status)",
+      "mcp__bf6a82a2-4aab-4b53-9166-b1fef180e414__get_project"
     ]
   }
 }

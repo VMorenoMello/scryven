@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Scryven · Web app kit</title>
+  <link rel="stylesheet" href="globals.css">
+  <style>
+    body { margin: 0; min-height: 100vh; background: var(--bg); }
+    #root { display: flex; min-height: 100vh; }
+    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+    .scroll { flex: 1; overflow: auto; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="Icon.jsx"></script>
+  <script type="text/babel" src="Button.jsx"></script>
+  <script type="text/babel" src="Input.jsx"></script>
+  <script type="text/babel" src="QuadrantChip.jsx"></script>
+  <script type="text/babel" src="TaskItem.jsx"></script>
+  <script type="text/babel" src="QuadrantCard.jsx"></script>
+  <script type="text/babel" src="StreakBadge.jsx"></script>
+  <script type="text/babel" src="Sidebar.jsx"></script>
+  <script type="text/babel" src="TopBar.jsx"></script>
+  <script type="text/babel" src="MatrixView.jsx"></script>
+  <script type="text/babel" src="CaptureBar.jsx"></script>
+  <script type="text/babel" src="DailyThree.jsx"></script>
+
+  <script type="text/babel">
+    const SEED = [
+      { id: 't1', title: 'Sign Q3 contractor invoice',   q: 'q1', due: 'today', done: false },
+      { id: 't2', title: 'Push hotfix to staging',       q: 'q1', due: 'today', done: false },
+      { id: 't3', title: 'Outline FrontEnd BR talk',     q: 'q2', due: 'Fri',   done: false },
+      { id: 't4', title: 'Draft team OKRs for Q4',       q: 'q2', due: '',      done: false },
+      { id: 't5', title: 'Reply to procurement thread',  q: 'q3', due: '',      done: true  },
+      { id: 't6', title: 'Forward press requests to Léa',q: 'q3', due: '',      done: false },
+      { id: 't7', title: 'Unsubscribe from 4 newsletters',q:'q4', due: '',      done: false },
+      { id: 't8', title: 'Pick three priorities for today', q: null, due: '', done: false },
+    ];
+
+    function App() {
+      const [tasks, setTasks] = React.useState(SEED);
+      const [active, setActive] = React.useState('matrix');
+      const [dailyIds, setDailyIds] = React.useState(['t1', 't3', 't2']);
+      const [dark, setDark] = React.useState(false);
+
+      React.useEffect(() => {
+        document.documentElement.classList.toggle('dark', dark);
+      }, [dark]);
+
+      const onDrop = (id, q) => setTasks(ts => ts.map(t => t.id === id ? { ...t, q } : t));
+      const onToggle = (id) => setTasks(ts => ts.map(t => t.id === id ? { ...t, done: !t.done } : t));
+      const onAdd = (title) => setTasks(ts => [...ts, { id: 'n' + Date.now(), title, q: null, due: '', done: false }]);
+
+      const inbox = tasks.filter(t => !t.q);
+      const daily = dailyIds.map(id => tasks.find(t => t.id === id)).filter(Boolean);
+
+      return (
+        <>
+          <Sidebar active={active} onNav={setActive} streak={23} />
+          <div className="main">
+            <TopBar
+              title="Esta semana"
+              subtitle="Triage your backlog. Pick three. Repeat."
+              right={
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  <Button variant="ghost" size="sm" icon={dark ? 'sun' : 'moon'}
+                          onClick={() => setDark(!dark)}>
+                    {dark ? 'Light' : 'Dark'}
+                  </Button>
+                  <Button variant="secondary" size="sm" icon="search">Search</Button>
+                  <Button variant="primary" size="sm" icon="plus">New task</Button>
+                </div>
+              }
+            />
+
+            <div className="scroll">
+              {active === 'matrix' && (
+                <MatrixView tasks={tasks.filter(t => t.q)} onDrop={onDrop} onToggle={onToggle} />
+              )}
+
+              {active === 'today' && (
+                <div style={{ padding: 32, maxWidth: 720 }}>
+                  <DailyThree tasks={daily} onToggle={onToggle} />
+                </div>
+              )}
+
+              {active === 'inbox' && (
+                <div style={{ padding: 32, maxWidth: 720, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <div style={{
+                    fontFamily: "'Instrument Serif', Georgia, serif",
+                    fontSize: 28, fontWeight: 400, color: 'var(--fg)',
+                    marginBottom: 6,
+                  }}>Inbox</div>
+                  <div style={{ fontSize: 13, color: 'var(--fg-muted)', marginBottom: 14 }}>
+                    Drag a task into the matrix to triage it.
+                  </div>
+                  {inbox.length === 0 ? (
+                    <div style={{
+                      padding: 32, textAlign: 'center', fontSize: 13,
+                      color: 'var(--fg-muted)',
+                      border: '1px dashed var(--border-subtle)',
+                      borderRadius: 12,
+                    }}>Inbox is clear.</div>
+                  ) : inbox.map(t => (
+                    <TaskItem key={t.id} task={t} onToggle={onToggle} />
+                  ))}
+                </div>
+              )}
+
+              {active === 'week' && (
+                <div style={{ padding: 32, maxWidth: 720, color: 'var(--fg-muted)', fontSize: 13 }}>
+                  Week view — coming soon.
+                </div>
+              )}
+            </div>
+
+            <CaptureBar onAdd={onAdd} />
+          </div>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

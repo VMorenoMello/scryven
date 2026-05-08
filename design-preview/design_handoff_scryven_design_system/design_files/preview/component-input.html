@@ -1,0 +1,48 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  .input {
+    display: flex; align-items: center; gap: 8px;
+    height: 38px; padding: 0 12px;
+    background: var(--surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    color: var(--fg);
+    width: 360px;
+  }
+  .input:focus-within { border-color: var(--green); }
+  .input.has-value { border-color: var(--border-strong); }
+  .ph { color: var(--fg-muted); flex: 1; }
+  .val { color: var(--fg); flex: 1; }
+  .kbd {
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--fg-muted);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 1px 6px;
+    background: var(--surface-2);
+  }
+  .lbl { font-size: 11px; color: var(--fg-muted); margin-bottom: 4px; }
+</style>
+</head>
+<body>
+  <div class="col" style="gap: 14px;">
+    <div>
+      <div class="lbl">empty</div>
+      <div class="input">
+        <span class="ph">Capture a task</span>
+        <span class="kbd">Enter</span>
+      </div>
+    </div>
+    <div>
+      <div class="lbl">focused</div>
+      <div class="input" style="border-color: #4A8A4A; box-shadow: 0 0 0 3px rgba(74,138,74,0.15);">
+        <span class="val">Sign Q3 contractor invoice<span style="display: inline-block; width: 1.5px; height: 14px; background: var(--fg); margin-left: 1px; vertical-align: -2px;"></span></span>
+        <span class="kbd">Enter</span>
+      </div>
+    </div>
+  </div>
+</body></html>

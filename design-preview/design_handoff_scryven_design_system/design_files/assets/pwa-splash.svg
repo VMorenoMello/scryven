@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="none">
+  
+  <rect width="1024" height="1024" fill="#FAF9F7"></rect>
+  <g transform="translate(412 360)">
+    <rect x="0" y="0" width="92" height="92" rx="12" fill="#F5F0E8"></rect>
+    <rect x="108" y="0" width="92" height="92" rx="12" fill="#E8F2FB"></rect>
+    <rect x="0" y="108" width="92" height="92" rx="12" fill="#FBE8E4"></rect>
+    <rect x="108" y="108" width="92" height="92" rx="12" fill="#2A2825"></rect>
+    <rect x="0" y="0" width="200" height="200" rx="14" stroke="#1F1D1A" stroke-width="2" stroke-opacity="0.85" fill="none"></rect>
+    <circle cx="100" cy="100" r="15" fill="#4A8A4A"></circle>
+  </g>
+  <text x="512" y="700" text-anchor="middle" class="word">scryven</text>
+</svg>

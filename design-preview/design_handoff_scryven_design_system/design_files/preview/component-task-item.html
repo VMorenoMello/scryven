@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  .row-task {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    color: var(--fg);
+    width: 380px;
+  }
+  .check {
+    width: 16px; height: 16px; border-radius: 4px;
+    border: 1.5px solid var(--border-strong);
+    flex-shrink: 0;
+  }
+  .check.done { background: #4A8A4A; border-color: #4A8A4A; position: relative; }
+  .check.done::after {
+    content: ''; position: absolute; left: 4px; top: 1px;
+    width: 4px; height: 9px; border: solid #FAF9F7; border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg);
+  }
+  .title { flex: 1; }
+  .done-title { color: var(--fg-muted); text-decoration: line-through; text-decoration-color: var(--fg-muted); }
+  .meta { font-size: 11px; color: var(--fg-muted); }
+  .chip-mini {
+    display: inline-flex; align-items: center;
+    height: 18px; padding: 0 7px;
+    border-radius: 999px;
+    border: 1px solid;
+    font-size: 10px; font-weight: 500;
+    line-height: 1;
+  }
+</style>
+</head>
+<body>
+  <div class="col" style="gap: 8px;">
+    <div class="row-task">
+      <div class="check"></div>
+      <span class="title">Sign Q3 contractor invoice</span>
+      <span class="chip-mini" style="background:#F5F0E8; color:#4A3F28; border-color:#B8A882;">Q1</span>
+      <span class="meta">today</span>
+    </div>
+    <div class="row-task">
+      <div class="check"></div>
+      <span class="title">Outline talk for FrontEnd BR meetup</span>
+      <span class="chip-mini" style="background:#E8F2FB; color:#1A3D5C; border-color:#4A7FB5;">Q2</span>
+      <span class="meta">Fri</span>
+    </div>
+    <div class="row-task">
+      <div class="check done"></div>
+      <span class="title done-title">Reply to procurement thread</span>
+      <span class="chip-mini" style="background:#FBE8E4; color:#6B1F10; border-color:#C4503A;">Q3</span>
+      <span class="meta">done</span>
+    </div>
+  </div>
+</body></html>

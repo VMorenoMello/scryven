@@ -1,0 +1,44 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  .badge {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 10px 16px;
+    background: #E8F2E8; color: #1F4A1F;
+    border: 1px solid #4A8A4A;
+    border-radius: 12px;
+    font-family: Inter, sans-serif;
+  }
+  .num { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 32px; line-height: 1; }
+  .label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
+  .dots { display: flex; gap: 5px; }
+  .dot { width: 9px; height: 9px; border-radius: 999px; background: #4A8A4A; }
+  .dot.empty { background: transparent; border: 1px solid #B8A882; }
+</style>
+</head>
+<body>
+  <div class="row" style="gap: 14px; align-items: center;">
+    <div class="badge">
+      <div>
+        <div class="num">23</div>
+        <div class="label">Day streak</div>
+      </div>
+      <div class="dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="badge" style="background:#F5F0E8; color:#4A3F28; border-color:#B8A882;">
+      <div>
+        <div class="num">2</div>
+        <div class="label">Day streak</div>
+      </div>
+      <div class="dots">
+        <div class="dot"></div><div class="dot"></div>
+        <div class="dot empty"></div><div class="dot empty"></div><div class="dot empty"></div>
+        <div class="dot empty"></div><div class="dot empty"></div>
+      </div>
+    </div>
+  </div>
+</body></html>
