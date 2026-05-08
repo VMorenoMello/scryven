@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { getStreak } from '@/app/actions/plans'
 import { AppShell } from './AppShell'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -7,9 +8,22 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  // Busca streak (dias consecutivos com pelo menos 1 tarefa concluída)
-  const email = user.email ?? ''
-  const userName = email.split('@')[0]
+  const userName = (user.email ?? '').split('@')[0]
+  const today = new Date().toISOString().split('T')[0]
 
-  return <AppShell userName={userName}>{children}</AppShell>
+  const [{ data: planToday }, streak] = await Promise.all([
+    supabase
+      .from('daily_plans')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('plan_date', today)
+      .maybeSingle(),
+    getStreak(user.id),
+  ])
+
+  return (
+    <AppShell userName={userName} streak={streak} hasPlannedToday={!!planToday}>
+      {children}
+    </AppShell>
+  )
 }

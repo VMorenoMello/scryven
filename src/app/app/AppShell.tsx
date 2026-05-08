@@ -12,7 +12,14 @@ const NAV_MAP: Record<NavId, string> = {
   week:   '/app/week',
 }
 
-export function AppShell({ children, userName }: { children: React.ReactNode; userName: string }) {
+interface AppShellProps {
+  children: React.ReactNode
+  userName: string
+  streak: number
+  hasPlannedToday: boolean
+}
+
+export function AppShell({ children, userName, streak, hasPlannedToday }: AppShellProps) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -23,6 +30,8 @@ export function AppShell({ children, userName }: { children: React.ReactNode; us
       <Sidebar
         active={active}
         userName={userName}
+        streak={streak}
+        hasPlannedToday={hasPlannedToday}
         onNav={(id) => router.push(NAV_MAP[id])}
       />
       <main style={{ flex: 1, overflow: 'auto', display: 'flex', flexDirection: 'column' }}>

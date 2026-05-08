@@ -16,11 +16,12 @@ const NAV_ITEMS: { id: NavId; label: string; icon: IconName; count: number | nul
 interface SidebarProps {
   active?: NavId
   streak?: number
+  hasPlannedToday?: boolean
   userName?: string
   onNav?: (id: NavId) => void
 }
 
-export function Sidebar({ active = 'matrix', streak = 0, userName = 'Você', onNav }: SidebarProps) {
+export function Sidebar({ active = 'matrix', streak = 0, hasPlannedToday = true, userName = 'Você', onNav }: SidebarProps) {
   const initial = userName.charAt(0).toUpperCase()
 
   return (
@@ -57,6 +58,13 @@ export function Sidebar({ active = 'matrix', streak = 0, userName = 'Você', onN
           >
             <Icon name={it.icon} size={16} color={isActive ? 'var(--green)' : 'var(--fg-muted)'} />
             <span style={{ flex: 1 }}>{it.label}</span>
+            {it.id === 'today' && !hasPlannedToday && (
+              <span style={{
+                width: 7, height: 7, borderRadius: 999,
+                background: 'var(--q2-border)',
+                flexShrink: 0,
+              }} />
+            )}
             {it.count !== null && (
               <span style={{ fontSize: 11, color: 'var(--fg-muted)' }}>{it.count}</span>
             )}
