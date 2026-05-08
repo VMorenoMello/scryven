@@ -118,15 +118,15 @@ export const QUADRANTS = {
 - [x] Drag and drop entre quadrantes (dnd-kit → atualiza Supabase)
 - [x] View de backlog (tarefas sem quadrante)
 - [x] Marcar tarefa como concluída
-### Sprint 3 — Ritual diário
-- [ ] Tela de planejamento diário (abre no login se ainda não planejou)
-- [ ] Seleção de 3 tarefas do dia — sugestão: 1 Q1, 1 Q2, 1 Q3
-- [ ] Streak visual — contador de dias consecutivos
-- [ ] Encerramento do dia — checklist + reflexão opcional
-### Sprint 4 — Polimento + lançamento
-- [ ] PWA: `manifest.json` + meta tags
-- [ ] Landing page: headline focada na dor, 3 benefícios, CTA
-- [ ] Email de boas-vindas com Resend
+### Sprint 3 — Ritual diário ✅
+- [x] Tela de planejamento diário (abre no login se ainda não planejou)
+- [x] Seleção de 3 tarefas do dia — sugestão: 1 Q1, 1 Q2, 1 Q3
+- [x] Streak visual — contador de dias consecutivos
+- [x] Encerramento do dia — checklist + reflexão opcional
+### Sprint 4 — Polimento + lançamento ✅
+- [x] PWA: `manifest.json` + meta tags
+- [x] Landing page: headline focada na dor, 3 benefícios, CTA
+- [x] Email de boas-vindas com Resend
 - [ ] Compartilhar com 10 pessoas, coletar feedback
 ---
 ## Fora do escopo do MVP (v2+)
@@ -159,7 +159,7 @@ export const QUADRANTS = {
 - **Vercel (painel):** https://vercel.com/victormorenomello-2812s-projects/scryven
 ---
 ## Status atual
-**Fase:** Sprint 1 — em andamento
+**Fase:** MVP completo — coletando feedback
 **Última atualização:** Maio 2026
 ### Changelog
 | Data | Decisão |
@@ -168,6 +168,8 @@ export const QUADRANTS = {
 | Maio 2026 | Nome alterado para **Scryven** |
 | Maio 2026 | Identidade visual definida — 5 cores MTG + Cinzel/Inter |
 | Maio 2026 | Design system delegado ao Claude (fora do Claude Code) |
-| Maio 2026 | Sprint 1 iniciado |
-| Maio 2026 | Repo GitHub + Vercel criados e integrados — deploy automático ativo |
+| Maio 2026 | Sprint 1 concluída — repo GitHub + Vercel + Supabase + auth |
+| Maio 2026 | Sprint 2 concluída — matriz Eisenhower + drag-and-drop + inbox |
+| Maio 2026 | Sprint 3 concluída — ritual diário (3 prioridades, streak, encerramento) |
+| Maio 2026 | Sprint 4 concluída — landing page, PWA, email Resend em produção |
 > Adicione uma linha ao changelog e marque os checkboxes a cada sessão concluída.
